@@ -1,6 +1,5 @@
 import random as r
-from collections import Counter
-import LittleHelpers as lh
+import littleHelpers as lh
 
 item_amount = r.randint(1,4)
 
@@ -21,8 +20,8 @@ food = {
 
 toppings = {
     1: {1: "pickles", 2: "lettuce", 3: "cheese", 4: "onions", 5: "tomatoes"},
-    2: {1: "cheese"},
-    3: {1: "whipped cream", 2: " a cherry"},
+    2: {1: "ranch", 2: "caesar", 3: "balsamic"},
+    3: {1: "whipped cream", 2: "a cherry"},
 }
 
 flavors = {
@@ -53,7 +52,24 @@ def toppings_for_burgers():
     for _ in range(amount):
         topping_list.append(toppings_available[num[num1]])
         num1 += 1
-    return topping_list
+    new_list = []
+    num = 1
+    length = len(topping_list) - 1
+    num2 = 0
+    new_list.append(" with ")
+    new_list.append(topping_list[0])
+    for _ in range(length):
+        if num2 == length - 1:
+            new_list.append(" and ")
+        else:
+            new_list.append(", ")
+        new_list.append(topping_list[num])
+        num += 1
+        num2 += 1
+    listy = new_list
+    sentence = ''.join(listy)
+    return(sentence)
+
 def check_toppings(list):
     num2 = r.randint(1,5)
     if lh.runThroughList(list, num2) == True:
@@ -61,37 +77,24 @@ def check_toppings(list):
     else:
         list.append(num2)
 
+def dressing_for_salad():
+    choice = r.randint(1,3)
+    dressing = toppings[2]
+    dressing_chosen = dressing[choice]
+    return dressing_chosen
+        
+
 def toppings_for_milkshake():
     choice = r.randint(1,2)
     topping = toppings[3]
     if choice == 1:
-        topping_choice = " with " + topping[r.randint(1,2)]
+        topping_choice = " "+ topping[r.randint(1,2)]
         return topping_choice
     else:
         topping_choice = " with whipped cream and a cherry"
-        return topping_choice
+        return topping_choice 
 
-
-def turn_to_words(list):
-    new_list = []
-    num = 1
-    length = len(list) - 1
-    num2 = 0
-    new_list.append(" with ")
-    new_list.append(list[0])
-    for _ in range(length):
-        if num2 == length - 1:
-            new_list.append(" and ")
-        else:
-            new_list.append(", ")
-        new_list.append(list[num])
-        num += 1
-        num2 += 1
-    return new_list
-def turn_words_to_list():
-    listy = turn_to_words(toppings_for_burgers())
-    sentence = ''.join(listy)
-    return(sentence)
+# garden salad: ranch, balsamic, caesar dressings, chicken option to add on
 
 count = 1
 num = 0
@@ -99,13 +102,26 @@ for _ in range(item_amount):
     food_chosen = foodChoice()
     if food_chosen == "ice cream":
         flavor_choice = flavor() + " "
-        topping_choice = ""
+        cup_or_cone = r.randint(1,2)
+        if cup_or_cone == 1:
+            topping_choice = " in a cup"
+        else:
+            topping_choice = ""
     elif "burger" in food_chosen or food_chosen == "chicken sandwich":
-        topping_choice = turn_words_to_list()
+        topping_choice = toppings_for_burgers()
         flavor_choice = ""
     elif food_chosen == "milkshake":
         flavor_choice = flavor() + " "
         topping_choice = toppings_for_milkshake()
+    elif food_chosen == "french fries" or food_chosen == "nachos":
+        yncheese = r.randint(1,2)
+        if yncheese == 1:
+            topping_choice = " with cheese"
+    elif food_chosen == "garden salad":
+        ynchicken = r.randint(1,2)
+        if ynchicken == 1:
+            topping_choice = " with chicken"
+        flavor_choice = dressing_for_salad() + " "
     else:
         flavor_choice = ""
         topping_choice = ""
