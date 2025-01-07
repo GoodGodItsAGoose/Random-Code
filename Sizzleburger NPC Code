@@ -90,7 +90,6 @@ def check_toppings(list):
         check_toppings(list)
     else:
         list.append(num2)
-        print(list)
 
 # chooses dressing for salad
 def dressing_for_salad():
