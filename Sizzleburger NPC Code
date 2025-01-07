@@ -1,5 +1,4 @@
 import random as r
-import littleHelpers as lh
 
 item_amount = r.randint(1,4)
 
@@ -7,29 +6,37 @@ starters = {
     1: {1: "I need ", 2: "I would like ", 3: "Please give me "},
     2: {1: "A ", 2: "Some "},
     3: {1: "And "},
-    4: {1: " with "}
+    4: {1: " with "},
 }
 
 food = {
-    1: {1: "single burger", 2: "double burger", 3: "bacon burger"},
-    2: {1: "chicken sandwich", 2: "grilled cheese", 3: "hotdog"},
-    3: {1: "french fries", 2: "onion rings", 3: "chicken nuggets", 4: "garden salad", 5: "chicken wings", 6: "motzarella sticks", 7: "brownie delight", 8: "cookie madness"},
-    4: {1: "fountain drink", 2: "milkshake"},
-    5: {1: "ice cream"}
+    1: {1: "Single Burger", 2: "Double Burger", 3: "Bacon Burger"},
+    2: {1: "Chicken Sandwich", 2: "Grilled Cheese", 3: "Hotdog"},
+    3: {1: "French Fries", 2: "Onion Rings", 3: "Chicken Nuggets", 4: "Garden Salad", 5: "Chicken Wings", 6: "Motzarella Sticks", 7: "Brownie Delight", 8: "Cookie Madness"},
+    4: {1: "Fountain Drink", 2: "Milkshake"},
+    5: {1: "Ice Cream"}
 }
 
 toppings = {
     1: {1: "pickles", 2: "lettuce", 3: "cheese", 4: "onions", 5: "tomatoes"},
-    2: {1: "ranch", 2: "caesar", 3: "balsamic"},
-    3: {1: "whipped cream", 2: "a cherry"},
-    4: {1: "BBQ ", 2: "buffalo "}
+    2: {1: "Ranch Dressing", 2: "Caesar Dressing", 3: "Balsamic Dressing"},
+    3: {1: "Whipped Cream", 2: "a Cherry"},
+    4: {1: "BBQ Sauce", 2: "Buffalo Sauce"}
 }
 
 flavors = {
-    1: "vanilla",
-    2: "chocolate",
-    3: "strawberry"
+    1: "Vanilla",
+    2: "Chocolate",
+    3: "Strawberry"
 }
+
+def runThroughList(list, var):
+    num = 0
+    for _ in range(len(list)):
+        if var == list[num]:
+            return True
+        else:
+            num += 1
 
 # chooses food
 def foodChoice():
@@ -79,10 +86,11 @@ def toppings_for_burgers():
 # checking if toppings appear more than once
 def check_toppings(list):
     num2 = r.randint(1,5)
-    if lh.runThroughList(list, num2, 1) == True:
+    if runThroughList(list, num2) == True:
         check_toppings(list)
     else:
         list.append(num2)
+        print(list)
 
 # chooses dressing for salad
 def dressing_for_salad():
@@ -99,12 +107,12 @@ def toppings_for_milkshake():
         topping_choice = " with "+ topping[r.randint(1,2)]
         return topping_choice
     else:
-        topping_choice = " with whipped cream and a cherry"
+        topping_choice = " with Whipped Cream and a Cherry"
         return topping_choice 
 
 # changing 'a' to 'some' when it makes sense
 def a_to_some(food_chosen):
-    if food_chosen == "onion rings" or food_chosen == "french fries" or food_chosen == "chicken wings" or food_chosen == "motzarella sticks":
+    if food_chosen == "Onion Rings" or food_chosen == "French Fries" or food_chosen == "Chicken Wings" or food_chosen == "Motzarella Sticks" or food_chosen == "Chicken Nuggets":
         num = "some "
     else:
         num = "a "
@@ -121,46 +129,46 @@ count = 1
 num = 0
 blah_list = []
 for _ in range(item_amount):
+    numbering = "("+str(count)+"/"+str(item_amount)+")"
     food_chosen = foodChoice()
     flavor_choice = ""
     topping_choice = ""
-    if food_chosen == "ice cream":
+    if food_chosen == "Ice Cream":
         flavor_choice = flavor() + " "
         if y_or_n() == True:
             topping_choice = " in a cup"
-    elif "wings" in food_chosen:
+    elif "Wings" in food_chosen:
         sauces = toppings[4]
-        flavor_choice = sauces[r.randint(1,2)]
-    elif "burger" in food_chosen or food_chosen == "chicken sandwich":
+        topping_choice = " with " + sauces[r.randint(1,2)]
+    elif "Burger" in food_chosen or food_chosen == "Chicken Sandwich":
         if y_or_n() == True:
             topping_choice = toppings_for_burgers()
-    elif food_chosen == "milkshake":
+    elif food_chosen == "Milkshake":
         flavor_choice = flavor() + " "
         topping_choice = toppings_for_milkshake()
-    elif food_chosen == "french fries" or food_chosen == "nachos":
+    elif food_chosen == "French Fries" or food_chosen == "Nachos":
         yncheese = r.randint(1,2)
         if y_or_n() == True:
             topping_choice = " with cheese"
-    elif food_chosen == 'garden salad':    
-        ynchicken = r.randint(1,2)
-        if ynchicken == 1:
+    elif food_chosen == 'Garden Salad':    
+        if y_or_n() == True:
             topping_choice = " with chicken"
-        flavor_choice = dressing_for_salad() + " "
+        topping_choice = " with " + dressing_for_salad() + topping_choice
     if count == 1:
         num = a_to_some(food_chosen)
         choice = r.randint(1,3)
         # start of order
         start = starters[1]
-        print(start[choice] + num + flavor_choice + food_chosen + topping_choice + ".")
+        print(numbering + " " + start[choice] + num + flavor_choice + food_chosen + topping_choice + ".")
     elif count == item_amount:
         num = a_to_some(food_chosen)
         # end of order
         start = starters[3]
-        print(start[1] + num + flavor_choice + food_chosen + topping_choice + ".")
+        print(numbering + " " + start[1] + num + flavor_choice + food_chosen + topping_choice + ".")
     elif count != 1:
         num = a_to_some(food_chosen)
         # middle of order
-        print(num.capitalize() + flavor_choice + food_chosen + topping_choice + ".")
+        print(numbering + " " + num.capitalize() + flavor_choice + food_chosen + topping_choice + ".")
     
     
         
