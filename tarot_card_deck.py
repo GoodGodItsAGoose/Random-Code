@@ -1,4 +1,3 @@
-import node as n
 import stacks as s
 import random as r
 
@@ -23,9 +22,9 @@ def insertCardsToStack(deck):
 
 def drawCard():
     if r.randint(1,2) == 1:
-        print(stack.peek(), " reversed")
+        print(stack.peek(), "reversed")
     else:
-        print(stack.peek(), " upright")
+        print(stack.peek(), "upright")
     oldStack.push(stack.peek())
     stack.pop()
 
@@ -57,18 +56,6 @@ def makeCards(number):
                 card = "Ace" + " of " + suits[num2]
             else:
                 card = str(num) + " of " + suits[num2]
-            
-            # if num == 1:
-            #     if r.randint(1,3) == 1:
-            #         card = "Ace" + " of " + suits[num2] + " reversed"
-            #     else:
-            #         card = "Ace" + " of " + suits[num2]
-            # else:
-            #     if r.randint(1,3) == 1:
-            #         card = str(num) + " of " + suits[num2] + " reversed"
-            #     else:
-            #         card = str(num) + " of " + suits[num2]
-            
             fullCards.append(card)
             num += 1
         num = 0
@@ -108,14 +95,8 @@ cards = [
     "hearts",
     "clovers"
 ]
-# stack = Stack()
 
 if __name__ == "__main__":
     startUp()
     while True:
         choice()
-            
-        
-    
-
-
