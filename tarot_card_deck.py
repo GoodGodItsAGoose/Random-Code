@@ -5,7 +5,7 @@ stack = s.Stack()
 oldStack = s.Stack()
 
 def seperateToList(commaOrNumber):
-    paragraph = "The Fool, The Magician, The High Priestess, The Empress, The Emperor, The Hierophant, The Lovers, The Chariot, Strength, The Hermit, Wheel of Fortune, Justice, The Hanged Man, Death, Temperance, The Devil, The Tower, The Star, The Moon, The Sun, Judgement, The World"
+    paragraph = "The Fool,The Magician,The High Priestess,The Empress,The Emperor,The Hierophant,The Lovers,The Chariot,Strength,The Hermit,Wheel of Fortune,Justice,The Hanged Man,Death,Temperance,The Devil,The Tower,The Star,The Moon,The Sun,Judgement,The World"
     newList = []
     if commaOrNumber == "comma":
         newList = paragraph.split(",")
@@ -22,18 +22,38 @@ def insertCardsToStack(deck):
 
 def drawCard():
     if r.randint(1,2) == 1:
-        print(stack.peek(), "reversed")
+        card = stack.peek() + " Reversed"
+        print(stack.peek(), "Reversed")
     else:
-        print(stack.peek(), "upright")
-    oldStack.push(stack.peek())
+        card = stack.peek() + " Upright"
+        print(stack.peek(), "Upright")
+    oldStack.push(card)
     stack.pop()
+
+def history():
+    listy = []
+    defo = True
+    while defo == True:
+        test = oldStack.peek()
+        if test == "Stack is empty.":
+            defo = False
+        else:
+            print(oldStack.peek(), end = " => ")
+            listy.append(oldStack.peek())
+            oldStack.pop()
+    print("None")
+    listy = listy[::-1]
+    num = 0
+    for _ in range(len(listy)):
+        oldStack.push(listy[num])
+        num += 1
 
 def makeCards(number):
     suits = [
-        "swords",
-        "wands",
-        "pentacles",
-        "cups"
+        "Swords",
+        "Wands",
+        "Pentacles",
+        "Cups"
     ]
 
     court = [
@@ -74,27 +94,22 @@ def makeCards(number):
         num += 1
 
 def choice():
-    cont = input("input 1 to draw a card or 2 to exit: ")
+    cont = input("input 1 to draw a card, 2 to view the last card, or 3 to exit: ")
     if str(cont) == "1":
         drawCard()
     elif str(cont) == "2":
+        history()
+    elif str(cont) == "3":
         exit()
         
 def startUp():
     cont = input("Input 1 to create a new deck or 2 to exit: ")
-    shuffleAmount = input("Input amount of times to shuffle: ")
     if str(cont) == "1":
+        shuffleAmount = input("Input amount of times to shuffle: ")
         makeCards(shuffleAmount)
         choice()
     elif str(cont) == "2":
         exit()
-   
-cards = [
-    "spades",
-    "diamonds",
-    "hearts",
-    "clovers"
-]
 
 if __name__ == "__main__":
     startUp()
